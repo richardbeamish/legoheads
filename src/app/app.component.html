@@ -1,0 +1,61 @@
+<main class="main">
+  <section class="wrapper">
+    <img
+      class="heads-image"
+      src="https://raw.githubusercontent.com/richardbeamish/legoheads/main/LegoHeadsSmall.jpg"
+      alt="LegoHeads"
+    />
+
+    <div class="grid">
+      <div
+        *ngFor="let head of legoHeadsSorted; let i = index"
+        class="box"
+        [ngClass]="{ 'hide-head': !(filter | headDisplay: head), 'cell-selected': head.selected }"
+        (click)="head.selected = !head.selected"
+      >
+        <div class="info">
+          {{ head | json }}
+        </div>
+
+        <!-- <div [ngClass]='{"myclass": someArray | inArray:result.id}'> -->
+        <!-- <div>MALE {{ filter | headDisplay: head }}</div> -->
+        <!-- <div>
+      {{ head.locX }},{{ head.locY }} ({{ i + 1 }})
+      </div> -->
+      </div>
+
+      <!-- <div class="box">X</div> -->
+    </div>
+  </section>
+
+  <section class="controls">
+
+
+    <ng-container *ngFor="let button of filterButtons">
+
+
+      <div>
+        <span>{{button.label}}: </span>
+      
+        <button *ngFor="let option of button.options; let i = index" (click)="applyFilter(button.type, i)"
+        [ngClass]="{ 'filter-active': i === 0 && filter[button.type] === true || i === 1 && filter[button.type] === false }">
+        {{option}}</button>
+
+      </div>
+
+    <!-- <button
+      
+      (click)="applyFilter(button.type)"
+      [ngClass]="{ 'filter-active': filter[button.type] === true }"
+    >
+      {{ button.label }}
+    </button> -->
+
+    </ng-container>
+
+
+
+    <!-- <label for="matching">AND matching</label><br />
+    <input type="checkbox" id="matching" value="true" [checked]="filter.andMatching" (change)="matchingChange($event)" /> -->
+  </section>
+</main>
