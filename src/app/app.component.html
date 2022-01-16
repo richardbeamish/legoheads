@@ -13,9 +13,9 @@
         [ngClass]="{ 'hide-head': !(filter | headDisplay: head), 'cell-selected': head.selected }"
         (click)="head.selected = !head.selected"
       >
-        <div class="info">
+        <!-- <div class="info">
           {{ head | json }}
-        </div>
+        </div> -->
 
         <!-- <div [ngClass]='{"myclass": someArray | inArray:result.id}'> -->
         <!-- <div>MALE {{ filter | headDisplay: head }}</div> -->
@@ -28,32 +28,39 @@
     </div>
   </section>
 
-  <section class="controls">
+  <section class="controls-wrapper">
+
+    <div class="controls filters">
+      <ng-container *ngFor="let button of filterButtons">
 
 
-    <ng-container *ngFor="let button of filterButtons">
+        <div>
+          <span>{{button.label}}: </span>
 
+          <button *ngFor="let option of button.options; let i = index" (click)="applyFilter(button.type, i)"
+          [ngClass]="{ 'filter-active': i === 0 && filter[button.type] === true || i === 1 && filter[button.type] === false }">
+          {{option}}</button>
 
-      <div>
-        <span>{{button.label}}: </span>
-      
-        <button *ngFor="let option of button.options; let i = index" (click)="applyFilter(button.type, i)"
-        [ngClass]="{ 'filter-active': i === 0 && filter[button.type] === true || i === 1 && filter[button.type] === false }">
-        {{option}}</button>
+        </div>
 
-      </div>
+      <!-- <button
 
-    <!-- <button
-      
-      (click)="applyFilter(button.type)"
-      [ngClass]="{ 'filter-active': filter[button.type] === true }"
-    >
-      {{ button.label }}
-    </button> -->
+        (click)="applyFilter(button.type)"
+        [ngClass]="{ 'filter-active': filter[button.type] === true }"
+      >
+        {{ button.label }}
+      </button> -->
 
-    </ng-container>
+      </ng-container>
+    </div>
 
+    <div class="controls clear-buttons">
+      <!-- Clear selections -->
+      <button (click)="clearFilters()">Clear filters</button>
 
+      <!-- Clear markers -->
+      <button (click)="clearMarkers()">Clear markers</button>
+    </div>
 
     <!-- <label for="matching">AND matching</label><br />
     <input type="checkbox" id="matching" value="true" [checked]="filter.andMatching" (change)="matchingChange($event)" /> -->

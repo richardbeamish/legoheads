@@ -11,20 +11,14 @@ export class AppComponent implements OnInit {
 
   legoHeadsSorted: ILegoHead[] = [];
 
-  filter: IHeadFilter = {
-    male: null,
-    beard: null,
-    stubble: null,
-    eyewear: null,
-    mouthOpen: null,
-    extra: null,
-    andMatching: true,
-  };
+  filter: IHeadFilter;
 
   filterButtons: FilterButton[];
 
   ngOnInit() {
     this.pivotData();
+
+    this.clearFilters();
 
     this.filterButtons = [
       {
@@ -111,6 +105,22 @@ export class AppComponent implements OnInit {
     console.log('mc', e.target.checked);
     this.filter.andMatching = e.target.checked;
     console.log('andMatching', this.filter.andMatching);
+  }
+
+  clearMarkers() {
+    this.legoHeadsSorted.forEach(head => head.selected = false);
+  }
+
+  clearFilters() {
+    this.filter = {
+      male: null,
+      beard: null,
+      stubble: null,
+      eyewear: null,
+      mouthOpen: null,
+      extra: null,
+      andMatching: true,
+    };
   }
 }
 
